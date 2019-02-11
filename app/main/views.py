@@ -18,21 +18,6 @@ def index():
     form = Pitchform()
     return render_template('index.html', form = form)
     
-    
-
-@main.route('/movie/<int:id>')
-def movie(id):
-
-    '''
-    View movie page function that returns the movie details page and its data
-    '''
-    movie = get_movie(id)
-    title = f'{movie.title}'
-    reviews = Review.get_reviews(movie.id)
-
-    return render_template('movie.html',title = title,movie = movie,reviews = reviews)
-
-
 @main.route('/search/<movie_name>')
 def search(movie_name):
     '''
@@ -46,14 +31,14 @@ def search(movie_name):
 
 @main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
 @login_required
-def new_review(id):
-    form = ReviewForm()
+def new_pitch(id):
+    form = PitchForm()
     movie = get_movie(id)
     reviews = Review.get_reviews(movie.id)
 
     if form.validate_on_submit():
         title = form.title.data
-        review = form.review.data
+        pitch = form.pitch.data
         new_review = Review(movie.id,title,movie.poster,review)
         new_review.save_review()
         return redirect(url_for('main.movie',id=movie.id ))
