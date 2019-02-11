@@ -1,12 +1,11 @@
-from flask import render_template,request,redirect,url_for,abort
+from flask import render_template, request, redirect, url_for, abort
 from . import main
-from ..requests import get_movies,get_movie,search_movie
-from .forms import ReviewForm,UpdateProfile
-from ..import db
-from ..models import Review,Movie,User
-from flask_login import login_required
+from ..models import User, Post,Comment
+from .forms import PitchForm,CommentForm,UpdateProfile
 from .. import db,photos
-#Review = review.Review
+from flask_login import login_user, logout_user, login_required, current_user
+import datetime
+
 
 # Views
 @main.route('/')
@@ -15,18 +14,11 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-
-    # Getting popular movie
-    popular_movies = get_movies('popular')
-    upcoming_movie = get_movies('upcoming')
-    now_showing_movie = get_movies('now_playing')
-    title = 'Home - Welcome to The best Movie Review Website Online'
-    search_movie = request.args.get('movie_query')
-
-    if search_movie:
-        return redirect(url_for('.search',movie_name=search_movie))
-    else:
-        return render_template('index.html', title = title, popular = popular_movies, upcoming = upcoming_movie, now_showing = now_showing_movie )
+    title = 'Home - Welcome to Pitch'
+    form = Pitchform()
+    return render_template('index.html', form = form)
+    
+    
 
 @main.route('/movie/<int:id>')
 def movie(id):
