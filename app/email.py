@@ -2,7 +2,7 @@ from flask_mail import Message
 from flask import render_template
 from . import mail
 
-subject_pref = 'Watchlist'
+subject_pref = 'Pitch'
 sender_email = 'wendokingoo@gmail.com'
 
 def mail_message(subject,template,to,**kwargs):
