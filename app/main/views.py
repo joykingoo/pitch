@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, abort
 from . import main
-from ..models import User, Post,Comment
+from ..models import User, Pitch
 from .forms import PitchForm,CommentForm,UpdateProfile
 from .. import db,photos
 from flask_login import login_user, logout_user, login_required, current_user
@@ -15,7 +15,7 @@ def index():
     View root page function that returns the index page and its data
     '''
     title = 'Home - Welcome to Pitch'
-    form = Pitchform()
+    form = PitchForm()
     return render_template('index.html', form = form)
     
 @main.route('/search/<movie_name>')
