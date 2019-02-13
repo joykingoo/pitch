@@ -15,7 +15,7 @@
             <li><a href="{{url_for('main.profile',uname=current_user.username)}}">PROFILE</a></li>
             <li><a href="/">HOME</a></li>
             <li><a href="/new_pitch"> NEW PITCH</a></li>
-            <li><a href="/new_feedback"> NEW FEEDBACK</a></li>
+            <!-- <li><a href="/new_feedback"> NEW FEEDBACK</a></li> -->
             <li><a href="{{url_for('auth.logout')}}">SIGN OUT</a></li>
             {% else %}
             <li><a href="{{url_for('auth.login')}}">SIGN IN</a></li>

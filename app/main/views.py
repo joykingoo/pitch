@@ -11,12 +11,13 @@ import datetime
 @main.route('/')
 def index():
 
+    all=Pitch.query.all()
     '''
     View root page function that returns the index page and its data
     '''
     title = 'Home - Welcome to Pitch'
     form = PitchForm()
-    return render_template('index.html', form = form, title=title)
+    return render_template('index.html',form = form,title=title, all=all)
     
 
 @main.route('/new_pitch', methods = ['GET','POST'])
@@ -74,7 +75,7 @@ def update_pic(uname):
 @login_required
 def new_feedback():
     form = FeedbackForm()
-    pitch = Pitch.query.get(id)
+    pitch = Pitch.query.filter()
     if form.validate_on_submit():
 
         feedback = Feedback(title=form.title.data,feedback=form.feedback.data, pitch=pitch)
