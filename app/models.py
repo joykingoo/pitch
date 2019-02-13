@@ -20,12 +20,12 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True,index = True)
     pass_secure = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
-    bio = db.Column(db.String(255))
+    bio = db.Column(db.String(255)) 
     profile_pic_path = db.Column(db.String())
 
     photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
     feedback = db.relationship('Feedback',backref = 'user',lazy = "dynamic")
-
+    pitch = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
 
     @property
     def password(self):
@@ -47,13 +47,13 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class Pitch(db.Model):
+class Pitch(UserMixin,db.Model):
 
     __tablename__ = 'pitch'
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String(255))
     content = db.Column(db.String(255))
-    #author_id =db.Column(db.Integer, db.Foreignkey('users.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
    
     def save_pitch(self):
         db.session.add(self)
@@ -61,7 +61,7 @@ class Pitch(db.Model):
     def __repr__(self):
         return f'Pitch {self.content}'
 
-class Feedback(db.Model):
+class Feedback(UserMixin,db.Model):
 
     __tablename__ = 'feedback'
 
@@ -78,7 +78,7 @@ class Feedback(db.Model):
     @classmethod
     def get_feedback(cls,id):
 
-        feedback = Feedback.query.filter_by(movie_id=id).all()
+        feedback = Feedback.query.filter_by(feedback_id=id).all()
         return feedback
 
 
@@ -88,4 +88,5 @@ class PhotoProfile(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     pic_path = db.Column(db.String())
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
 

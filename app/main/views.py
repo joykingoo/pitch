@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, abort
 from . import main
-from ..models import User, Pitch
-from .forms import PitchForm,CommentForm,UpdateProfile
+from ..models import User, Pitch,Feedback
+from .forms import PitchForm,FeedbackForm,UpdateProfile
 from .. import db,photos
 from flask_login import login_user, logout_user, login_required, current_user
 import datetime
@@ -16,35 +16,20 @@ def index():
     '''
     title = 'Home - Welcome to Pitch'
     form = PitchForm()
-    return render_template('index.html', form = form)
+    return render_template('index.html', form = form, title=title)
     
-@main.route('/search/<movie_name>')
-def search(movie_name):
-    '''
-    View function to display the search results
-    '''
-    movie_name_list = movie_name.split(" ")
-    movie_name_format = "+".join(movie_name_list)
-    searched_movies = search_movie(movie_name_format)
-    title = f'search results for {movie_name}'
-    return render_template('search.html',movies = searched_movies)
 
-@main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
+@main.route('/new_pitch', methods = ['GET','POST'])
 @login_required
-def new_pitch(id):
+def new_pitch():
     form = PitchForm()
-    movie = get_movie(id)
-    reviews = Review.get_reviews(movie.id)
 
     if form.validate_on_submit():
         title = form.title.data
-        pitch = form.pitch.data
-        new_review = Review(movie.id,title,movie.poster,review)
-        new_review.save_review()
-        return redirect(url_for('main.movie',id=movie.id ))
-
-    title = f'{movie.title} review'
-    return render_template('new_review.html',title = title, review_form=form, movie=movie)
+        pitch = Pitch(title=form.title.data)
+        pitch.save_pitch()
+        return redirect(url_for('main.index'))
+    return render_template('new_pitch.html',form=form)
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -84,3 +69,17 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/new_feedback', methods = ['GET','POST'])
+@login_required
+def new_feedback():
+    form = FeedbackForm()
+    pitch = Pitch.query.get(id)
+    if form.validate_on_submit():
+
+        feedback = Feedback(title=form.title.data,feedback=form.feedback.data, pitch=pitch)
+        db.session.add(feedback)
+        db.session.commit()
+
+    feed_back = Feedback.query.filter_by(pitch=pitch).all()
+    return render_template('new_feedback.html',feed_back=feed_back,form=form)

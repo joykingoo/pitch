@@ -1,28 +1,32 @@
 <div class="navbar navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
+        <div class="container-fluid">
+          <br>
+          <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"> Pitch </a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-
+            <a class="navbar-brand" href="/"> PITCH</a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+            <li><a href="{{url_for('main.profile',uname=current_user.username)}}">PROFILE</a></li>
+            <li><a href="/">HOME</a></li>
+            <li><a href="/new_pitch"> NEW PITCH</a></li>
+            <li><a href="/new_feedback"> NEW FEEDBACK</a></li>
+            <li><a href="{{url_for('auth.logout')}}">SIGN OUT</a></li>
+            {% else %}
+            <li><a href="{{url_for('auth.login')}}">SIGN IN</a></li>
+            {%endif%}
+          </ul>
+          <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              {% if current_user.is_authenticated %}
-              <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
-              <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
-              {% else %}
-              <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-              {%endif%}
-            </ul>
-        </div>
 
-    </div>
-</div>
+          
+      
+          </div>
+          <br>
+        </div>
+      </div>

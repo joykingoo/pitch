@@ -1,22 +1,8 @@
-{% import 'macros.html' as macro%}
 
-<!-- Content block -->
+{% extends 'base.html'%}
 
 {% block content %}
-<title> Pitch App</title>
-<div class="container">
-        <form>
-            <!-- <h3></h3>
-            <input type="text" name="pitch_query" placeholder="Submit a Pitch" class="form-control">
-            <input type="submit"  value="Submit" class="btn btn-default"> -->
-            <h3>Hello there stranger would you like to sign up? <li><a href="{{url_for('auth.register')}}">Register</a></li></h3>
-            <h3> Do you have an account with us Login?  <li><a href="{{url_for('auth.login')}}">Login</a></li></h3>
-        </form>
-    
 
-    
-</div>
+<h3 style="font-weight:bolder"> Welcome user to Pitch where you can pitch your ideas</h3>
 
-
-
-{% endblock%}
+{%endblock%}
