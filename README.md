@@ -20,7 +20,6 @@ Run /start.sh code in the terminal for the app to work
 ## Known Bugs
 There are currently no known bugs but if you find any mail me at wendokingoo@gmail.com
 
-
 ## Technologies used
 Python3.6
 Bootstrap
