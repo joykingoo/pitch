@@ -6,10 +6,10 @@
 <h3 style="font-weight:bolder"> Welcome user to Pitch, where you can pitch your ideas</h3>
 {% if current_user.is_authenticated %}
 {% for pitch in all %}
-<p style="font-weight:lighter; font-size:20px">{{pitch.title}} {{pitch.content}}</p>
+<p style="font-weight:lighter; font-size:20px">{{pitch.title}},{{pitch.content}}</p>
 
 {% else %}
-<p>Would you like to make a pitch? Please Sign in</p>
+<p>Would you like to make a pitch? </p>
 {% endfor %}
 {%endif%}
 {%endblock%}

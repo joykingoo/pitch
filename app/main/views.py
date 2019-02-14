@@ -16,8 +16,9 @@ def index():
     View root page function that returns the index page and its data
     '''
     title = 'Home - Welcome to Pitch'
+
     form = PitchForm()
-    return render_template('index.html',form = form,title=title, all=all)
+    return render_template('index.html',form = form,title=title, all=all,)
     
 
 @main.route('/new_pitch', methods = ['GET','POST'])
@@ -27,8 +28,9 @@ def new_pitch():
 
     if form.validate_on_submit():
         title = form.title.data
-        pitch = Pitch(title=form.title.data)
-        pitch.save_pitch()
+        content = form.pitch.data
+        add_pitch = Pitch(title=title,content=content)
+        add_pitch.save_pitch()
         return redirect(url_for('main.index'))
     return render_template('new_pitch.html',form=form)
 
